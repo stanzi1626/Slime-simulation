@@ -15,8 +15,8 @@ def sample(x_position, y_position, x_velocity, y_velocity, trail_data):
     direction = 10
 
     for line in trail_data:
-        x_relative_vector = -(x_position - line[0][0])
-        y_relative_vector = -(y_position - line[0][1])
+        x_relative_vector = -(x_position - line[0])
+        y_relative_vector = -(y_position - line[1])
 
         relative_vector_amplitude = math.sqrt(x_relative_vector**2 + y_relative_vector**2)
         velocity_amplitude = math.sqrt(x_velocity**2 + y_velocity**2)
@@ -38,13 +38,13 @@ def sample(x_position, y_position, x_velocity, y_velocity, trail_data):
         #check which of the sample regions the trail is within
         #central region
         if sample_theta > -theta/2 and sample_theta < theta/2:
-            centre_intensity += line[1] * (1 / relative_vector_amplitude) #trails further away will have less of an influence
+            centre_intensity += line[2] * (1 / relative_vector_amplitude) #trails further away will have less of an influence
         #left region
         elif sample_theta < -theta/2:
-            left_intensity += line[1] * (1 / relative_vector_amplitude)
+            left_intensity += line[2] * (1 / relative_vector_amplitude)
         #right region
         elif sample_theta > theta/2:
-            right_intensity += line[1] * (1 / relative_vector_amplitude)
+            right_intensity += line[2] * (1 / relative_vector_amplitude)
         
     if left_intensity + right_intensity + centre_intensity != 0:
         factor = left_intensity + right_intensity + centre_intensity
@@ -65,9 +65,6 @@ def sample(x_position, y_position, x_velocity, y_velocity, trail_data):
     
     if left_intensity + right_intensity + centre_intensity == 0:
         direction = 0
-        
-    if direction != 0:
-        print("WOOOO")
 
     return direction
     

@@ -6,11 +6,11 @@ from sample import sample
 from trail_data import trail
 
 time_step = 1
-number_ants = 10
+number_ants = 100
 
 fig = plt.figure() 
 ax = plt.axes(xlim=(0, 1000), ylim=(0, 1000)) 
-line, = ax.plot([], [], 'ro',lw=2) 
+line, = ax.plot([], [], 'or', markersize=1) 
 
 colony = [slime(np.random.rand(2)*1000, np.random.uniform(-1, 1), np.random.uniform(-1, 1)) for _ in range(number_ants)]
 trail = trail()
@@ -26,7 +26,7 @@ def animate(i):
     xdata = []
     ydata = []
 
-    temp = np.zeros((0, 2))
+    temp = np.zeros((0, 3))
 
     for j, k in enumerate(colony):
         if i > 0:
@@ -39,10 +39,10 @@ def animate(i):
         xdata.append(x)
         ydata.append(y)
 
-    trail.data = np.zeros((0, 2))
-    trail.data = np.vstack((trail.data, temp))  
-    
-    line.set_data(xdata, ydata)
+    trail.data = np.zeros((0, 3))
+    trail.data = np.vstack((trail.data, temp))
+   
+    line.set_data(trail.data[:, 0], trail.data[:, 1])
 
     return line,
 
